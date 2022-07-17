@@ -10,8 +10,6 @@ import {
 } from 'reactstrap';
 import "./Header.css"
 import Logo from '../../Assets/logo.png'
-
-
 const Header = () =>{
     return(
         <div className="Navigation">
