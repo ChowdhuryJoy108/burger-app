@@ -13,8 +13,23 @@
     color: white;
     font-size: 25px;
     margin-top: -25px;
+    margin-left: 15px;
 }
 
+@media screen and (min-width: 480px) {
+  
+    .NavLink {
+        font-size: 15px;
+        margin-left: 7px;
+    }
+  }
+
 .NavLink:hover{
+    color: wheat;
+    text-decoration: none;
+}
+
+.active{
+    text-shadow: 1px 1px gray;
     color: wheat;
 }

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Burger from "./Burger/Burger";
 import Controls from "./Controlls/Controls";
 import Summary from "./Summary/Summary";
+import { useNavigate } from "react-router-dom";
 import { 
     Modal, 
     ModalBody, 
@@ -14,9 +15,9 @@ const INGREDIENT_PRICES = {
     cheese:40,
     meat:90, 
   }
-
+  
 export default class BurgerBuilder extends Component {
-
+    
     state = {
         ingredients:[
             {
@@ -81,6 +82,7 @@ export default class BurgerBuilder extends Component {
     toggleModal = ()=>{
         this.setState({modalOpen:!this.state.modalOpen})
     }
+    
 
     render(){
 
@@ -96,14 +98,14 @@ export default class BurgerBuilder extends Component {
                 toggleModal={this.toggleModal}/>
             </div>
 
-            <Modal isOpen={this.state.modalOpen}  onClick={this.toggleModal}>
+            <Modal isOpen={this.state.modalOpen}>
                 <ModalHeader>Your Order Summary</ModalHeader>
                 <ModalBody>
                    <h5>Total Price {this.state.totalPrice.toFixed(0)} BDT</h5> 
                    <Summary ingredients={this.state.ingredients} />
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="success" onClick={this.toggleModal}>Continue to Checkout</Button>
+                    <Button color="success"  onClick="">Continue to Checkout</Button>
                     <Button color="secondary" onClick={this.toggleModal}>Cancel</Button>
                 </ModalFooter>
 

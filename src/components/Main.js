@@ -1,6 +1,10 @@
 import React from "react";  
 import Header from './Header/Header';
 import BurgerBuilder from './BurgerBuilder/BurgerBuilder';
+import Orders from "./Orders/Order";
+import Checkout from "./Orders/Checkout/Checkout";
+
+import  { Routes,Route } from 'react-router-dom';
 
 
 const Main = () => {
@@ -8,7 +12,14 @@ const Main = () => {
         <div>
             <Header />
             <div className="container">
-            <BurgerBuilder />
+                <Routes>
+                <Route path="/" exact element={<BurgerBuilder/>} />
+                <Route path="/Orders" element={<Orders/>} />
+                <Route path="/Checkout" element={<Checkout/>} />
+                </Routes>
+               
+            {/* <BurgerBuilder /> */}
+
             </div>
             
         </div>
