@@ -1,7 +1,7 @@
 import React from "react";
 
 const Summary = (props) =>{
-    console.log(props);
+    
     const ingredientsSummary = props.ingredients.map(item =>{
         return(
             <li key={item.type}>
