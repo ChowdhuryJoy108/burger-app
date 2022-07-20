@@ -35,8 +35,14 @@ class Checkout extends Component{
 
     }
 
-    goBack = () =>{
-        this.props.history.goBack("/")
+    // goBack = () =>{
+    //     this.props.history.goBack("/")
+    // } // not working!
+
+    toggleModal = () =>{
+       this.setState({
+        isModalOpen:!this.state.isModalOpen,
+       })
     }
 
     inputChangeHandler = (e)=>{
@@ -123,7 +129,7 @@ class Checkout extends Component{
        return(
          <div>
            {this.state.isLoading ? <Spinner /> : form}
-           <Modal isOpen={this.state.isModalOpen} onClick={this.goBack}>
+           <Modal isOpen={this.state.isModalOpen} onClick={this.toggleModal}>
             <ModalBody>
                 <p>{this.state.modalMsg}</p>
             </ModalBody>

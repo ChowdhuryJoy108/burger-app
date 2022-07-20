@@ -1,89 +1,117 @@
 import * as actionTypes from './actionTypes'
 const INGREDIENT_PRICES = {
-    salad:20,
-    cheese:40,
-    meat:90, 
-  }
-
-const INITIAL_STATE = {
-    ingredients:[
-        {
-            type:'salad', 
-            amount:0
-        },
-        {
-            type:'cheese', 
-            amount:0
-        },
-        {
-            type:'meat', 
-            amount:0
-        }
-    ],
-    totalPrice:50,
-    purchasable:false
+    salad: 20,
+    cheese: 40,
+    meat: 90,
 }
 
-export const reducer = (state=INITIAL_STATE, action) =>{
+const INITIAL_STATE = {
+    ingredients: [
+        {
+            type: 'salad',
+            amount: 0
+        },
+        {
+            type: 'cheese',
+            amount: 0
+        },
+        {
+            type: 'meat',
+            amount: 0
+        }
+    ],
+    orders: [],
+    orderLoading: true,
+    orderErr: false,
+    totalPrice: 50,
+    purchasable: false,
+}
+
+export const reducer = (state = INITIAL_STATE, action) => {
     const ingredients = [...state.ingredients];
 
-    switch(action.type){
+    switch (action.type) {
         case actionTypes.ADD_INGREDIENT:
-         
-       for(let item of ingredients){
-          if(item.type === action.payload){
-            item.amount++;
-          }
-       }
-       return{
-            ...state,
-            ingredients:ingredients,
-            totalPrice:state.totalPrice + INGREDIENT_PRICES[action.payload]
-       }
-      case actionTypes.REMOVE_INGREDIENT:
-        // const ingredients = [...state.ingredients];
-        for(let item of ingredients){
-            if(item.type === action.payload){
-                if(item.amount <= 0)return state; 
-                item.amount--;
+
+            for (let item of ingredients) {
+                if (item.type === action.payload) {
+                    item.amount++;
+                }
             }
-        }
-        return{
-            ...state,
-            ingredients:ingredients,
-            totalPrice:state.totalPrice - INGREDIENT_PRICES[action.payload],
-        }
+            return {
+                ...state,
+                ingredients: ingredients,
+                totalPrice: state.totalPrice + INGREDIENT_PRICES[action.payload]
+            }
+        case actionTypes.REMOVE_INGREDIENT:
+            // const ingredients = [...state.ingredients];
+            for (let item of ingredients) {
+                if (item.type === action.payload) {
+                    if (item.amount <= 0) return state;
+                    item.amount--;
+                }
+            }
+            return {
+                ...state,
+                ingredients: ingredients,
+                totalPrice: state.totalPrice - INGREDIENT_PRICES[action.payload],
+            }
         case actionTypes.UPDATE_PURCHASABLE:
-            const sum = state.ingredients.reduce((sum,element)=>{
-                return sum +element.amount;
+            const sum = state.ingredients.reduce((sum, element) => {
+                return sum + element.amount;
             }, 0)
+            return {
+                ...state,
+                purchasable: sum > 0,
+            }
+
+        case actionTypes.RESET_INGREDIENT:
+            return {
+                ...state,
+                ingredients: [
+                    {
+                        type: 'salad',
+                        amount: 0
+                    },
+                    {
+                        type: 'cheese',
+                        amount: 0
+                    },
+                    {
+                        type: 'meat',
+                        amount: 0
+                    }
+                ],
+                totalPrice: 50,
+                purchasable: false
+            }
+
+        case actionTypes.LOAD_ORDERS:
+
+            let orders = [];
+            for (let key in action.payload) {
+
+                orders.push({
+                    ...action.payload[key],
+                    id: key,
+                })
+            }
+
+            return {
+                ...state,
+                orders: orders,
+                orderLoading: false,
+
+            }
+
+        case actionTypes.ORDER_LOAD_FAILED:
             return{
                 ...state,
-                purchasable:sum > 0,
+                orderErr:true,
+                orderLoading:false,
             }
 
-            case actionTypes.RESET_INGREDIENT:
-                return{
-                    ...state,
-                    ingredients:[
-                        {
-                            type:'salad', 
-                            amount:0
-                        },
-                        {
-                            type:'cheese', 
-                            amount:0
-                        },
-                        {
-                            type:'meat', 
-                            amount:0
-                        }
-                    ],
-                    totalPrice:50,
-                    purchasable:false
 
-                }
-      
         default:
             return state;
     }

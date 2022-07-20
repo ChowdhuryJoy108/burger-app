@@ -69,41 +69,43 @@ class BurgerBuilder extends Component {
     addIngredientHandle = type =>{
        this.props.addIngredient(type);
        this.props.updatePurchasable();
-    }
+    } // more button's function for redux
 
     removeIngredientHandle = type =>{
         this.props.removeIngredient(type);
         this.props.updatePurchasable();
-    }
+    } // less button function for redux
 
     toggleModal = ()=>{
         this.setState({modalOpen:!this.state.modalOpen})
-    }
+    } // click to open modal (pop-up)
 
     render(){
         return(
             <div>
-                 <div className="d-flex flex-md-row flex-column">
-                <Burger ingredients={this.props.ingredients} />
-                <Controls 
-                ingredientAdded={this.addIngredientHandle} 
-                ingredientRemove={this.removeIngredientHandle}  
-                price={this.props.totalPrice}
-                purchasable={this.props.purchasable}
-                toggleModal={this.toggleModal}/>
-            </div>
+               <div className="d-flex flex-md-row flex-column">
+                 <Burger ingredients={this.props.ingredients} /> {/*
+                 1st display the burger with top and bottom bread only  */}
+                 <Controls 
+                 ingredientAdded={this.addIngredientHandle} 
+                 ingredientRemove={this.removeIngredientHandle}  
+                 price={this.props.totalPrice}
+                 purchasable={this.props.purchasable}
+                 toggleModal={this.toggleModal}/>
+                 {/* thn display the controls card with less more button modal also part of it coz the button which will display the modal ww will create in control component */}
+                </div>
 
-            <Modal isOpen={this.state.modalOpen}>
-                <ModalHeader>Your Order Summary</ModalHeader>
-                <ModalBody>
-                   <h5>Total Price {this.props.totalPrice.toFixed(0)} BDT</h5> 
-                   <Summary ingredients={this.props.ingredients} />
-                </ModalBody>
-                <ModalFooter>
+             <Modal isOpen={this.state.modalOpen}>
+                 <ModalHeader>Your Order Summary</ModalHeader>
+                 <ModalBody>
+                    <h5>Total Price {this.props.totalPrice.toFixed(0)} BDT</h5> 
+                    <Summary ingredients={this.props.ingredients} />
+                 </ModalBody>
+                 <ModalFooter>
                     <Button style={{backgroundColor:"#D70F64"}}  >Continue to Checkout</Button>
                     <Button color="secondary" onClick={this.toggleModal}>Cancel</Button>
-                </ModalFooter>
-            </Modal>
+                 </ModalFooter>
+             </Modal>
             </div>
         )
     }
